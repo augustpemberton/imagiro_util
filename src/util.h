@@ -5,10 +5,7 @@
 #pragma once
 #include "juce_audio_processors/juce_audio_processors.h"
 #include "juce_dsp/juce_dsp.h"
-#include <fastexp/fastexp.h>
-
-#include <melatonin_perfetto/melatonin_perfetto.h>
-
+#include "fastexp/fastexp.h"
 
 static inline float
 fastlog2 (float x)
