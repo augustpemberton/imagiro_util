@@ -54,12 +54,12 @@ static inline int wrapWithinRange(int i, int min, int max, bool pow2 = false) {
     return (((i-min % n) + n) % n) + min;
 }
 
-static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& buffer) {
+static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& buffer, double sampleRate = 48000) {
     if (file.exists()) file.deleteFile();
     juce::WavAudioFormat format;
     std::unique_ptr<juce::AudioFormatWriter> writer;
     writer.reset (format.createWriterFor (new juce::FileOutputStream (file),
-                                          48000.0,
+                                          sampleRate,
                                           buffer.getNumChannels(),
                                           24,
                                           {},
