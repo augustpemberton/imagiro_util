@@ -54,6 +54,23 @@ static inline int wrapWithinRange(int i, int min, int max, bool pow2 = false) {
     return (((i-min % n) + n) % n) + min;
 }
 
+static std::optional<juce::AudioSampleBuffer> loadFileIntoBuffer(const juce::File& file) {
+    juce::AudioFormatManager afm;
+    afm.registerBasicFormats();
+    std::unique_ptr<juce::AudioFormatReader> reader (afm.createReaderFor(file));
+    if (!reader) return {};
+
+    juce::AudioSampleBuffer b (reader->numChannels, reader->lengthInSamples);
+    reader->read(
+            b.getArrayOfWritePointers(),
+            reader->numChannels,
+            0,
+            reader->lengthInSamples
+            );
+
+    return b;
+}
+
 static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& buffer, double sampleRate = 48000) {
     if (file.exists()) file.deleteFile();
     juce::WavAudioFormat format;
