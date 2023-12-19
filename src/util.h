@@ -4,6 +4,29 @@
 
 #pragma once
 #include "juce_audio_processors/juce_audio_processors.h"
+
+template <typename T>
+struct LoopRange {
+    T start;
+    T end;
+    T loopStart;
+    T loopEnd;
+
+    bool looped = false;
+
+    bool contains(LoopRange& other) {
+        if (!looped) return juce::Range<T>(start, end).contains({other.start, other.end});
+
+        return contains({other.start, std::min(other.end, loopEnd)}) &&
+               contains({std::max(other.start, loopStart), other.end});
+    }
+
+    bool contains(juce::Range<T> other) {
+        return juce::Range<T>(start, std::min(end, loopEnd)).contains(other) ||
+               juce::Range<T>(std::max(start, loopStart), end).contains(other);
+    }
+
+};
 #include "juce_dsp/juce_dsp.h"
 #include "fastapprox.h"
 
