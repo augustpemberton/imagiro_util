@@ -6,6 +6,15 @@
 #include "juce_audio_processors/juce_audio_processors.h"
 
 template <typename T>
+int ifloor (T val) {
+    return (int)val;
+}
+template <typename T>
+int iceil(T val) {
+    return ifloor(val) + 1;
+}
+
+template <typename T>
 struct LoopRange {
     T start;
     T end;
