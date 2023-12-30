@@ -78,6 +78,14 @@ static inline double wrapWithinRange(double i, int min, int max, bool pow2 = fal
     return fmod(fmod(i-min, n) + n, n) + min;
 }
 
+static inline juce::int64 wrapWithinRange(juce::int64 i, juce::int64 min, juce::int64 max, bool pow2 = false) {
+    if (i>=min && i<max) return i;
+    if (pow2 && i > 0) return (int) wrapWithinRangePow2(i, min, max);
+    auto n = max - min;
+    if (n <= 0) return min;
+    return (((i-min % n) + n) % n) + min;
+}
+
 static inline int wrapWithinRange(int i, int min, int max, bool pow2 = false) {
     if (i>=min && i<max) return i;
     if (pow2 && i > 0) return (int) wrapWithinRangePow2(i, min, max);
