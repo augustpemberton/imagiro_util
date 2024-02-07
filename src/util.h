@@ -138,7 +138,7 @@ static float rand01() { return juce::Random::getSystemRandom().nextFloat(); }
 static float randGain() { return rand01() * 2 - 1; }
 
 //==============================================================================
-static float lerp(float a, float b, float t) {
+static inline float lerp(float a, float b, float t) {
     return a + (b-a) * t;
 }
 
