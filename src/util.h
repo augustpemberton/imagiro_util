@@ -6,11 +6,11 @@
 #include "juce_audio_processors/juce_audio_processors.h"
 
 template <typename T>
-int ifloor (T val) {
+[[maybe_unused]] int ifloor (T val) {
     return (int)val;
 }
 template <typename T>
-int iceil(T val) {
+[[maybe_unused]] int iceil(T val) {
     return ifloor(val) + 1;
 }
 
@@ -23,14 +23,14 @@ struct LoopRange {
 
     bool looped = false;
 
-    bool contains(LoopRange& other) {
+    [[maybe_unused]] bool contains(LoopRange& other) {
         if (!looped) return juce::Range<T>(start, end).contains({other.start, other.end});
 
         return contains({other.start, std::min(other.end, loopEnd)}) &&
                contains({std::max(other.start, loopStart), other.end});
     }
 
-    bool contains(juce::Range<T> other) {
+    [[maybe_unused]] bool contains(juce::Range<T> other) {
         return juce::Range<T>(start, std::min(end, loopEnd)).contains(other) ||
                juce::Range<T>(std::max(start, loopStart), end).contains(other);
     }
@@ -40,7 +40,7 @@ struct LoopRange {
 #include "fastapprox.h"
 
 template <typename T>
-juce::String formatNumber (T v)
+[[maybe_unused]] juce::String formatNumber (T v)
 {
     if (v == 0)
         return "0";
@@ -56,29 +56,29 @@ juce::String formatNumber (T v)
     return juce::String (v, dec);
 }
 
-static int prevPowerOfTwo(float v) {
+[[maybe_unused]] static int prevPowerOfTwo(float v) {
     return (int)floor(log2f(v) + 0.5f);
 }
 
-static inline double lim_p2(uint32_t i, uint32_t size) {
+[[maybe_unused]] static inline double lim_p2(uint32_t i, uint32_t size) {
     return i & (size-1);
 }
 
-static inline double wrapWithinRangePow2(double i, int min, int max) {
+[[maybe_unused]] static inline double wrapWithinRangePow2(double i, int min, int max) {
     auto size = max - min;
     jassert(juce::isPowerOfTwo(size));
 
     return lim_p2(static_cast<uint32_t>(i - min), static_cast<uint32_t>(size)) + min;
 }
 
-static inline double wrapWithinRange(double i, int min, int max, bool pow2 = false) {
+[[maybe_unused]] static inline double wrapWithinRange(double i, int min, int max, bool pow2 = false) {
     if (pow2 && i > 0) return wrapWithinRangePow2(i, min, max);
     if (i>=min && i<max) return i;
     auto n = max - min;
     return fmod(fmod(i-min, n) + n, n) + min;
 }
 
-static inline juce::int64 wrapWithinRange(juce::int64 i, juce::int64 min, juce::int64 max, bool pow2 = false) {
+[[maybe_unused]] static inline juce::int64 wrapWithinRange(juce::int64 i, juce::int64 min, juce::int64 max, bool pow2 = false) {
     if (i>=min && i<max) return i;
     if (pow2 && i > 0) return (int) wrapWithinRangePow2(i, min, max);
     auto n = max - min;
@@ -86,7 +86,7 @@ static inline juce::int64 wrapWithinRange(juce::int64 i, juce::int64 min, juce::
     return (((i-min % n) + n) % n) + min;
 }
 
-static inline int wrapWithinRange(int i, int min, int max, bool pow2 = false) {
+[[maybe_unused]] static inline int wrapWithinRange(int i, int min, int max, bool pow2 = false) {
     if (i>=min && i<max) return i;
     if (pow2 && i > 0) return (int) wrapWithinRangePow2(i, min, max);
     auto n = max - min;
@@ -94,7 +94,7 @@ static inline int wrapWithinRange(int i, int min, int max, bool pow2 = false) {
     return (((i-min % n) + n) % n) + min;
 }
 
-static std::optional<juce::AudioSampleBuffer> loadFileIntoBuffer(const juce::File& file) {
+[[maybe_unused]] static std::optional<juce::AudioSampleBuffer> loadFileIntoBuffer(const juce::File& file) {
     juce::AudioFormatManager afm;
     afm.registerBasicFormats();
     std::unique_ptr<juce::AudioFormatReader> reader (afm.createReaderFor(file));
@@ -111,7 +111,7 @@ static std::optional<juce::AudioSampleBuffer> loadFileIntoBuffer(const juce::Fil
     return b;
 }
 
-static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& buffer, double sampleRate = 48000) {
+[[maybe_unused]] static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& buffer, double sampleRate = 48000) {
     if (file.exists()) file.deleteFile();
     juce::WavAudioFormat format;
     std::unique_ptr<juce::AudioFormatWriter> writer;
@@ -126,41 +126,41 @@ static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& b
 
 }
 
-static float midiNoteToFreq(float midiNote) {
+[[maybe_unused]] static float midiNoteToFreq(float midiNote) {
     return powf(2, (midiNote-69)/12) * 440;
 }
 
-static float freqToMidiNote(float freq) {
+[[maybe_unused]] static float freqToMidiNote(float freq) {
     return log(freq/440.0)/log(2) * 12 + 69;
 }
 
-static float rand01() { return juce::Random::getSystemRandom().nextFloat(); }
-static float randGain() { return rand01() * 2 - 1; }
+[[maybe_unused]] static float rand01() { return juce::Random::getSystemRandom().nextFloat(); }
+[[maybe_unused]] static float randGain() { return rand01() * 2 - 1; }
 
 //==============================================================================
-static inline float lerp(float a, float b, float t) {
+[[maybe_unused]] static inline float lerp(float a, float b, float t) {
     return a + (b-a) * t;
 }
 
-static double lerp(double a, double b, double t) {
+[[maybe_unused]] static double lerp(double a, double b, double t) {
     return a + (b-a) * t;
 }
 
-static double nearestMultiple(double x, double m) {
+[[maybe_unused]] static double nearestMultiple(double x, double m) {
     return round(x / m) * m;
 }
 
 template <typename T>
-inline bool almostEqual (T a, T b, T precision = T (0.00001))
+[[maybe_unused]] inline bool almostEqual (T a, T b, T precision = T (0.00001))
 {
     return std::abs (a - b) < precision;
 }
 
-static inline juce::NormalisableRange<float> getFreqRange() {
+[[maybe_unused]] static inline juce::NormalisableRange<float> getFreqRange() {
     return {20, 20000, 0.25};
 }
 
-static inline juce::NormalisableRange<float> getNormalisableRangeExp(float min, float max, float step = 0.001f)
+[[maybe_unused]] static inline juce::NormalisableRange<float> getNormalisableRangeExp(float min, float max, float step = 0.001f)
 {
     jassert(min > 0.0f);
     jassert(max > 0.0f);
