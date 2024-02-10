@@ -7,6 +7,9 @@ For more information visit www.rabiensoftware.com
 
 #pragma once
 
+#ifdef JUCE_WINDOWS
+#include <windows.h>
+#endif
 
 #if defined JUCE_MAC || defined JUCE_WINDOWS || defined JUCE_LINUX
 

@@ -1,7 +1,7 @@
 #include "./config.hpp"
 
 // zlib
-#include <zlib.h>
+#include "miniz.h"
 
 // std
 #include <limits>
@@ -50,7 +50,7 @@ class Decompressor
             throw std::runtime_error("inflate init failed");
         }
 #pragma GCC diagnostic pop
-        inflate_s.next_in = reinterpret_cast<z_const Bytef*>(data);
+        inflate_s.next_in = reinterpret_cast<const Bytef*>(data);
 
 #ifdef DEBUG
         // Verify if size (long type) input will fit into unsigned int, type used for zlib's avail_in
