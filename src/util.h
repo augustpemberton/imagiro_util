@@ -4,6 +4,8 @@
 
 #pragma once
 #include "juce_audio_processors/juce_audio_processors.h"
+#include "juce_dsp/juce_dsp.h"
+#include "fastapprox.h"
 
 template <typename T>
 [[maybe_unused]] int ifloor (T val) {
@@ -36,8 +38,6 @@ struct LoopRange {
     }
 
 };
-#include "juce_dsp/juce_dsp.h"
-#include "fastapprox.h"
 
 template <typename T>
 [[maybe_unused]] juce::String formatNumber (T v)
