@@ -20,12 +20,6 @@
 #include "src/readerwriterqueue/readerwriterqueue.h"
 #include "src/readerwriterqueue/readerwritercircularbuffer.h"
 
-#include "src/gzip/compress.hpp"
-#include "src/gzip/config.hpp"
-#include "src/gzip/decompress.hpp"
-#include "src/gzip/utils.hpp"
-#include "src/gzip/version.hpp"
-
 
 // Re-enable warnings for MSVC
 #ifdef _MSC_VER

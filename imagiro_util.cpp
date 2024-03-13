@@ -15,7 +15,6 @@
 
 #include "src/util.cpp"
 #include "src/filewatcher/gin_filewatcher.cpp"
-#include "src/gzip/miniz.cpp"
 
 // Re-enable warnings for MSVC
 #ifdef _MSC_VER
