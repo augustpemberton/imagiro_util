@@ -20,6 +20,8 @@
 #include "src/readerwriterqueue/readerwriterqueue.h"
 #include "src/readerwriterqueue/concurrentqueue.h"
 #include "src/readerwriterqueue/readerwritercircularbuffer.h"
+#include "src/zstr/miniz.h"
+#include "src/zstr/zstr.hpp"
 
 
 // Re-enable warnings for MSVC
