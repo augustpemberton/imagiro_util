@@ -64,18 +64,12 @@ template <typename T>
     return i & (size-1);
 }
 
-[[maybe_unused]] static inline double wrapWithinRangePow2(double i, int min, int max) {
+template <typename T>
+[[maybe_unused]] static inline T wrapWithinRangePow2(T i, int min, int max) {
     auto size = max - min;
     jassert(juce::isPowerOfTwo(size));
 
     return lim_p2(static_cast<uint32_t>(i - min), static_cast<uint32_t>(size)) + min;
-}
-
-[[maybe_unused]] static inline double wrapWithinRange(double i, int min, int max, bool pow2 = false) {
-    if (pow2 && i > 0) return wrapWithinRangePow2(i, min, max);
-    if (i>=min && i<max) return i;
-    auto n = max - min;
-    return fmod(fmod(i-min, n) + n, n) + min;
 }
 
 [[maybe_unused]] static inline juce::int64 wrapWithinRange(juce::int64 i, juce::int64 min, juce::int64 max, bool pow2 = false) {
@@ -94,6 +88,13 @@ template <typename T>
     return (((i-min % n) + n) % n) + min;
 }
 
+template <typename T>
+[[maybe_unused]] static inline T wrapWithinRange(T i, T min, T max, bool pow2 = false) {
+    if (pow2 && i > 0) return wrapWithinRangePow2(i, min, max);
+    if (i>=min && i<max) return i;
+    auto n = max - min;
+    return fmod(fmod(i-min, n) + n, n) + min;
+}
 [[maybe_unused]] static std::optional<juce::AudioSampleBuffer> loadFileIntoBuffer(const juce::File& file) {
     juce::AudioFormatManager afm;
     afm.registerBasicFormats();
