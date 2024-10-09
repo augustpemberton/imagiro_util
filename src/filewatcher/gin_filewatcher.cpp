@@ -86,6 +86,8 @@ public:
 #ifdef JUCE_LINUX
 #define BUF_LEN (10 * (sizeof(struct inotify_event) + NAME_MAX + 1))
 
+#include <sys/inotify.h>
+
 class FileSystemWatcher::Impl : public juce::Thread,
                                 private juce::AsyncUpdater
 {
