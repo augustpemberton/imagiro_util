@@ -195,4 +195,19 @@ namespace imagiro
                     return start + step * std::floor ((value - start) / step + 0.5f);
                 }};
     }
+
+    static auto logMin = std::log(20);
+    static auto logMax = std::log(20000);
+    static auto logRange = logMax - logMin;
+
+    static float normToFreq(float norm) {
+        float v = fastexp((norm * logRange) + logMin);
+        return juce::jlimit(20.f, 20000.f, v);
+    }
+
+    static float freqToNorm(float freq) {
+        float logvalue = fastlog(freq);
+        return (logvalue - logMin) / logRange;
+    }
+
 }
