@@ -22,6 +22,7 @@
 #include "src/readerwriterqueue/readerwritercircularbuffer.h"
 #include "src/miniz/miniz.h"
 #include "src/miniz/compress_string.h"
+#include "src/BackgroundTaskRunner.h"
 
 
 // Re-enable warnings for MSVC
