@@ -58,6 +58,10 @@ namespace envelopes {
 			reset();
 		}
 
+		void setPhase(float phase01) {
+			ratio = phase01;
+		}
+
 		/// Resets the LFO state, starting with random phase.
 		void reset() {
 			ratio = random();
