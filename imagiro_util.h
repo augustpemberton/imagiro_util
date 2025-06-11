@@ -23,6 +23,7 @@
 #include "src/miniz/miniz.h"
 #include "src/miniz/compress_string.h"
 #include "src/BackgroundTaskRunner.h"
+#include "src/structures/FixedHashSet.h"
 
 
 // Re-enable warnings for MSVC
