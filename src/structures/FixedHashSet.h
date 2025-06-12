@@ -89,8 +89,65 @@ public:
         }
     };
 
+    class const_iterator {
+        const Slot* slots;
+        size_t pos;
+        size_t size;
+
+        void advance_to_valid() {
+            while (pos < size && (!slots[pos].occupied || slots[pos].deleted)) {
+                ++pos;
+            }
+        }
+
+    public:
+        using iterator_category = std::forward_iterator_tag;
+        using value_type = T;
+        using difference_type = std::ptrdiff_t;
+        using pointer = const T*;
+        using reference = const T&;
+
+        const_iterator(const Slot* slots, size_t pos, size_t size)
+            : slots(slots), pos(pos), size(size) {
+            advance_to_valid();
+        }
+
+        // Allow conversion from iterator to const_iterator
+        const_iterator(const iterator& it)
+            : slots(it.slots), pos(it.pos), size(it.size) {}
+
+        reference operator*() const { return slots[pos].value; }
+        pointer operator->() const { return &slots[pos].value; }
+
+        const_iterator& operator++() {
+            ++pos;
+            advance_to_valid();
+            return *this;
+        }
+
+        const_iterator operator++(int) {
+            const_iterator tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
+        bool operator==(const const_iterator& other) const {
+            return pos == other.pos;
+        }
+
+        bool operator!=(const const_iterator& other) const {
+            return !(*this == other);
+        }
+    };
+
     iterator begin() { return iterator(table.data(), 0, N); }
     iterator end() { return iterator(table.data(), N, N); }
+
+    const_iterator begin() const { return const_iterator(table.data(), 0, N); }
+    const_iterator end() const { return const_iterator(table.data(), N, N); }
+
+    const_iterator cbegin() const { return const_iterator(table.data(), 0, N); }
+    const_iterator cend() const { return const_iterator(table.data(), N, N); }
 
     bool insert(const T& key) {
         size_t pos = hash(key);
@@ -151,6 +208,10 @@ public:
 
     bool empty() const {
         return active_count == 0;
+    }
+
+    size_t size() const {
+        return active_count;
     }
 
 private:

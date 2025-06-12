@@ -24,6 +24,7 @@
 #include "src/miniz/compress_string.h"
 #include "src/BackgroundTaskRunner.h"
 #include "src/structures/FixedHashSet.h"
+#include "src/structures/beman/inplace_vector.h"
 
 
 // Re-enable warnings for MSVC

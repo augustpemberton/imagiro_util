@@ -3,10 +3,6 @@
 #ifndef BEMAN_INPLACE_VECTOR_INPLACE_VECTOR_HPP
 #define BEMAN_INPLACE_VECTOR_INPLACE_VECTOR_HPP
 
-#if !defined(__has_include) || __has_include(<beman/inplace_vector/config.hpp>)
-#include <beman/inplace_vector/config.hpp>
-#endif
-
 #include <algorithm> // for rotate...
 #include <array>
 #include <compare>
@@ -23,13 +19,8 @@
 #define IV_EXPECT(EXPR)
 
 #ifndef BEMAN_IV_THROW_OR_ABORT
-#if BEMAN_INPLACE_VECTOR_NO_EXCEPTIONS()
-#include <cstdlib> // for abort
-#define BEMAN_IV_THROW_OR_ABORT(x) abort()
-#else
 #include <stdexcept> // for length_error
 #define BEMAN_IV_THROW_OR_ABORT(x) throw x
-#endif
 #endif
 
 // beman::from_range_t
