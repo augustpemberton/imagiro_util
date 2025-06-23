@@ -151,6 +151,7 @@ namespace imagiro
     }
 
     [[maybe_unused]] static float rand01() { return juce::Random::getSystemRandom().nextFloat(); }
+    [[maybe_unused]] static float randRange(const float min, const float max) { return min + juce::Random::getSystemRandom().nextFloat() * (max - min); }
     [[maybe_unused]] static float randGain() { return rand01() * 2 - 1; }
 
     //==============================================================================
