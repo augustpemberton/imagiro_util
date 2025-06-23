@@ -10,6 +10,18 @@
 
 namespace imagiro
 {
+    inline float noteVelocityToGain(const float velocity) {
+        const auto minVelocitySkew = 0.12;
+        const auto totalRange = 1. - minVelocitySkew;
+
+        if (velocity > minVelocitySkew) {
+            return fastpow(velocity * totalRange, 1.7f) + minVelocitySkew;
+        }
+
+        return velocity;
+    }
+
+
     template <typename T>
     [[maybe_unused]] int ifloor (T val) {
         return (int)val;
