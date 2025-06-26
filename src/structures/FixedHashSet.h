@@ -168,6 +168,9 @@ public:
                 active_count--;
                 return true;
             }
+            if (table[pos].value == key && table[pos].deleted) {
+                return false; // Already deleted
+            }
             pos = (pos + 1) % N;
         }
         return false;
