@@ -150,6 +150,10 @@ namespace imagiro
         return log(freq/440.0)/log(2) * 12 + 69;
     }
 
+    [[maybe_unused]] static float freqRatioToSemitones(float ratio) {
+        return log2(ratio) * 12;
+    }
+
     [[maybe_unused]] static float rand01() { return juce::Random::getSystemRandom().nextFloat(); }
     [[maybe_unused]] static float randRange(const float min, const float max) { return min + juce::Random::getSystemRandom().nextFloat() * (max - min); }
     [[maybe_unused]] static float randGain() { return rand01() * 2 - 1; }
