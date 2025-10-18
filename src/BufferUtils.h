@@ -20,7 +20,7 @@ struct BufferUtils {
         }
 
         juce::dsp::ProcessSpec spec{
-            sampleRate, static_cast<uint32_t>(numSamples), static_cast<uint>(buffer.getNumChannels())
+            sampleRate, static_cast<uint32_t>(numSamples), static_cast<uint16_t>(buffer.getNumChannels())
         };
         // Apply A-weighting
         AWeightingFilter aFilter;
