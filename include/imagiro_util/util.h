@@ -130,13 +130,15 @@ namespace imagiro
     [[maybe_unused]] static void writeBufferToFile(const juce::File& file, juce::AudioSampleBuffer& buffer, double sampleRate = 48000) {
         if (file.exists()) file.deleteFile();
         juce::WavAudioFormat format;
-        std::unique_ptr<juce::AudioFormatWriter> writer;
-        writer.reset (format.createWriterFor (new juce::FileOutputStream (file),
-                                              sampleRate,
-                                              buffer.getNumChannels(),
-                                              24,
-                                              {},
-                                              0));
+
+        std::unique_ptr<juce::OutputStream> outputStream = std::make_unique<juce::FileOutputStream>(file);
+
+        const std::unique_ptr<juce::AudioFormatWriter> writer = format.createWriterFor(outputStream,
+            juce::AudioFormatWriterOptions{}
+            .withSampleRate(sampleRate)
+            .withNumChannels(buffer.getNumChannels())
+            .withBitsPerSample(24));
+
         if (writer != nullptr)
             writer->writeFromAudioSampleBuffer (buffer, 0, buffer.getNumSamples());
 

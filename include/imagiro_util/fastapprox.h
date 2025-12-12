@@ -1,3 +1,18 @@
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wc99-extensions"
+#pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#pragma clang diagnostic ignored "-Wc++98-compat"
+#pragma clang diagnostic ignored "-Wimplicit-float-conversion"
+#endif
+
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+
+
+
 /*=====================================================================*
  *                   Copyright (C) 2012 Paul Mineiro                   *
  * All rights reserved.                                                *
@@ -1650,3 +1665,12 @@ vfastertanfull (const v4sf x)
 #endif //__SSE2__
 
 #endif // __FAST_TRIG_H_
+
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif

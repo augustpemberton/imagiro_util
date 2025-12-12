@@ -1,0 +1,33 @@
+add_library(imagiro_util STATIC)
+
+# important: copy compile definitions from the main project
+target_compile_definitions(imagiro_util PUBLIC
+        $<TARGET_PROPERTY:${ProjectName},COMPILE_DEFINITIONS>
+)
+
+target_sources(imagiro_util PRIVATE
+        "include/imagiro_util/util.cpp"
+        "include/imagiro_util/filewatcher/gin_filewatcher.cpp"
+        "include/imagiro_util/miniz/miniz.cpp"
+)
+
+target_include_directories(imagiro_util PUBLIC
+        include
+)
+
+target_link_libraries(imagiro_util PUBLIC
+        juce::juce_audio_basics
+        juce::juce_dsp
+)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    target_compile_options(imagiro_util PRIVATE
+            -Wno-c99-extensions
+            -Wno-gnu-statement-expression
+            -Wno-shadow-field-in-constructor
+    )
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_compile_options(imagiro_util PRIVATE
+            -Wno-pedantic
+    )
+endif()

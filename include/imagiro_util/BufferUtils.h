@@ -6,7 +6,7 @@
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_dsp/juce_dsp.h>
 
-#include "imagiro_processor/src/dsp/filter/AWeightingFilter.h"
+#include "imagiro_processor/dsp/filter/AWeightingFilter.h"
 
 struct BufferUtils {
     static float getAWeightedRMS(const juce::AudioSampleBuffer &buffer, int startSample,
