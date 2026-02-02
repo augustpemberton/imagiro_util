@@ -7,6 +7,7 @@
 #include "juce_audio_formats/juce_audio_formats.h"
 #include "juce_dsp/juce_dsp.h"
 #include "fastapprox.h"
+#include <numbers>
 
 namespace imagiro
 {
@@ -19,6 +20,14 @@ namespace imagiro
         }
 
         return velocity;
+    }
+
+    static std::pair<float, float> constantPowerPan(float pan01) {
+        const auto angle = pan01 * 0.5f * std::numbers::pi;
+        return {
+            fastcos(angle),
+            fastsin(angle)
+        };
     }
 
 
