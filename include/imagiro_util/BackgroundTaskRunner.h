@@ -6,6 +6,8 @@
 #include <juce_core/juce_core.h>
 #include <choc/containers/choc_Value.h>
 
+#include "readerwriterqueue/readerwriterqueue.h"
+
 namespace imagiro {
     class BackgroundTaskRunner : juce::Thread {
     public:

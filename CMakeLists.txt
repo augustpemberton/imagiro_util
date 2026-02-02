@@ -7,15 +7,22 @@ target_compile_definitions(imagiro_util PUBLIC
 
 target_sources(imagiro_util PRIVATE
         "include/imagiro_util/util.cpp"
-        "include/imagiro_util/filewatcher/gin_filewatcher.cpp"
+        "include/imagiro_util/filewatcher/gin_filewatcher.mm"
         "include/imagiro_util/miniz/miniz.cpp"
 )
+
+# Link CoreServices on macOS for FSEvents file watching
+if(APPLE)
+    find_library(CORE_SERVICES_LIBRARY CoreServices)
+    target_link_libraries(imagiro_util PUBLIC ${CORE_SERVICES_LIBRARY})
+endif()
 
 target_include_directories(imagiro_util PUBLIC
         include
 )
 
 target_link_libraries(imagiro_util PUBLIC
+        juce::juce_core
         juce::juce_audio_basics
         juce::juce_dsp
 )

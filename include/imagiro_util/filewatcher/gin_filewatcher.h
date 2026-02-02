@@ -7,6 +7,8 @@ For more information visit www.rabiensoftware.com
 
 #pragma once
 
+#include <juce_core/juce_core.h>
+
 #ifdef JUCE_WINDOWS
 #include <windows.h>
 #endif
