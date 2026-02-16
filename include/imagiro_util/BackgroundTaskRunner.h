@@ -4,7 +4,7 @@
 #pragma once
 #include <utility>
 #include <juce_core/juce_core.h>
-#include <choc/containers/choc_Value.h>
+#include <nlohmann/json.hpp>
 
 #include "readerwriterqueue/readerwriterqueue.h"
 
@@ -13,13 +13,13 @@ namespace imagiro {
     public:
 
         struct Listener {
-            virtual void OnTaskFinished(int taskID, const choc::value::ValueView& result) {}
+            virtual void OnTaskFinished(int taskID, const nlohmann::json& result) {}
         };
         void addListener(Listener* l) { listeners.add(l); }
         void removeListener(Listener* l) { listeners.remove(l); }
 
         struct Task {
-            std::function<choc::value::Value()> fn {};
+            std::function<nlohmann::json()> fn {};
             int id = -1;
         };
 
