@@ -23,6 +23,7 @@ target_include_directories(imagiro_util PUBLIC
 
 target_link_libraries(imagiro_util PUBLIC
         juce::juce_core
+        juce::juce_events
         juce::juce_audio_basics
         juce::juce_dsp
         nlohmann_json::nlohmann_json
